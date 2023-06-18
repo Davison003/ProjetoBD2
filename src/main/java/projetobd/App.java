@@ -14,7 +14,6 @@ public class App {
     
     private final String url = "jdbc:postgresql://localhost:5432/Books";
     private String user;
-    //private String senha;
     private char[] password;
 
     public String getUser() {
@@ -34,8 +33,7 @@ public class App {
     }
     
     
-        
-        //String user, String password
+       
 
     public Connection connect() throws SQLException  { //metodo para conectar no BD
         return DriverManager.getConnection(url, user, String.valueOf(password));
@@ -73,8 +71,12 @@ public class App {
     public void insertRelatLivros(Autor aut, Livro liv, Genero gen) throws SQLException{
         String SQL = "INSERT INTO relatoriolivros(id_autor, id_livro, id_genero, autor, livro, genero, ano, isbn, descricao)"
                 + " VALUES (?,?,?,?,?,?,?,?,?)";
-        try(Connection conn = connect();
-                PreparedStatement pstmt = conn.prepareStatement(SQL)) {
+        
+        Connection conn = connect();
+        conn.setAutoCommit(false);
+        PreparedStatement pstmt = conn.prepareStatement(SQL);
+        
+        try {
             
             pstmt.setInt(1, aut.getId());
             pstmt.setInt(2, liv.getId());
@@ -87,46 +89,119 @@ public class App {
             pstmt.setString(9, liv.getDescricao());
             
             int affectedRows = pstmt.executeUpdate();
-        }catch (SQLException e) {
-                JOptionPane.showMessageDialog(null, "Comando Invalido", "Transacao invalida", 2);
-    		System.out.println(e.getMessage());
-    	}
+            
+            if (affectedRows > 0){
+                JOptionPane.showMessageDialog(null, "Insert Realizado", "Transacao feita", 1);
+            } else {
+                conn.rollback();
+            }
+            
+            conn.commit();
+            
+        }catch (SQLException | IllegalArgumentException  e) {
+            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, "Nao foi possivel realizar o comando. Dando Rollback na transacao", 
+                    "Transacao invalida", 2);
+            
+            try {
+                if(conn != null){
+                    conn.rollback();
+                }
+            }catch (SQLException | IllegalArgumentException  ex){
+                System.out.println(ex.getMessage());
+                JOptionPane.showMessageDialog(null, "Nao foi possivel realizar o comando. Dando Rollback na transacao", 
+                    "Transacao invalida", 2);
+            }
+        } finally {
+            this.close(pstmt);  
+            this.close(conn);
+        }
     }
     
     
     public void insertAutor(Autor aut) throws SQLException {
         String SQL = "INSERT INTO Autor(id, nome, bio)"
                         + "VALUES(?,?,?)";
-        
-        try (Connection conn = connect();
-                PreparedStatement pstmt = conn.prepareStatement(SQL)){
+        Connection conn = connect();
+        conn.setAutoCommit(false);
+        PreparedStatement pstmt = conn.prepareStatement(SQL);
+        try {
             
             pstmt.setInt(1, aut.getId());
             pstmt.setString(2, aut.getNome());
             pstmt.setString(3, aut.getBio());
             
             int affectedRows = pstmt.executeUpdate();
-          
+            
+            if (affectedRows > 0){
+                JOptionPane.showMessageDialog(null, "Insert Realizado", "Transacao feita", 1);
+            }else {
+                conn.rollback();
+            }
+            
+            conn.commit();
+            
         }catch (SQLException e) {
-    		System.out.println(e.getMessage());
-    	}
+            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, "Nao foi possivel realizar o comando. Dando Rollback na transacao", 
+                    "Transacao invalida", 2);
+            
+            try {
+                if(conn != null){
+                    conn.rollback();
+                }
+            }catch (SQLException ex){
+                System.out.println(ex.getMessage());
+                JOptionPane.showMessageDialog(null, "Nao foi possivel realizar o comando. Dando Rollback na transacao", 
+                    "Transacao invalida", 2);
+            }
+        } finally {
+            this.close(pstmt);  
+            this.close(conn);
+        }
     }
     
     public void insertGen(Genero gen) throws SQLException {
         String SQL = "INSERT INTO Genero(id, nome, descricao)"
                 + "VALUES(?,?,?)";
         
-        try (Connection conn = connect();
-                PreparedStatement pstmt = conn.prepareStatement(SQL)){
+        Connection conn = connect();
+        conn.setAutoCommit(false);
+        PreparedStatement pstmt = conn.prepareStatement(SQL);
+        try {
             
             pstmt.setInt(1, gen.getId());
             pstmt.setString(2, gen.getNome());
             pstmt.setString(3, gen.getDescricao());
             
             int affectedRows = pstmt.executeUpdate();
+            
+            if (affectedRows > 0){
+                JOptionPane.showMessageDialog(null, "Insert Realizado", "Transacao feita", 1);
+            }else {
+                conn.rollback();
+            }
+            
+            conn.commit();
+            
         }catch (SQLException e) {
-    		System.out.println(e.getMessage());
-    	}
+            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, "Nao foi possivel realizar o comando. Dando Rollback na transacao", 
+                    "Transacao invalida", 2);
+            
+            try {
+                if(conn != null){
+                    conn.rollback();
+                }
+            }catch (SQLException ex){
+                System.out.println(ex.getMessage());
+                JOptionPane.showMessageDialog(null, "Nao foi possivel realizar o comando. Dando Rollback na transacao", 
+                    "Transacao invalida", 2);
+            }
+        } finally {
+            this.close(pstmt);
+            this.close(conn);
+        }
     }
     
     
@@ -165,14 +240,74 @@ public class App {
     
     
     public void DeleteLivro(int cod) throws SQLException {
-    	String SQL = "DELETE FROM Livro WHERE id = ?";
+    	String SQLDeleteLivroAutor = "DELETE FROM livro_autor WHERE id_livro=?";
+        String SQLDeleteLivro = "DELETE FROM livro WHERE id=?";
     	
-    	try (Connection conn = connect();
-    			PreparedStatement pstmt = conn.prepareStatement(SQL)) {
-    		pstmt.setInt(1, cod);
-    		
-    		int affectedRows = pstmt.executeUpdate();
-    	}
+        Connection conn = null;
+        PreparedStatement pstmt1 = null;
+        PreparedStatement pstmt2 = null;
+        
+        
+        try {
+            conn = connect();
+            conn.setAutoCommit(false);
+            
+            //delete na tabela livro_autor
+            pstmt1 = conn.prepareStatement(SQLDeleteLivroAutor);
+            pstmt1.setInt(1, cod);
+            
+            int affectedRows = pstmt1.executeUpdate();
+            
+            if(affectedRows > 0){
+                //delete na tabela livro
+                pstmt2 = conn.prepareStatement(SQLDeleteLivro);
+                pstmt2.setInt(1, cod);
+                int affectedRows1 = pstmt2.executeUpdate();
+                
+                System.out.println("certinho");
+                JOptionPane.showMessageDialog(null, "Delete Realizado", "Transacao feita", 1);
+            }else {
+            	conn.rollback();
+            	JOptionPane.showMessageDialog(null, "Nao foi possivel realizar o comando. Dando Rollback na transacao", 
+                        "Transacao invalida", 2);
+            }
+            
+            conn.commit();
+            
+            
+        }catch (SQLException e) {
+            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, "Nao foi possivel realizar o comando. Dando Rollback na transacao", 
+                    "Transacao invalida", 2);
+            
+            try {
+                if(conn != null){
+                    conn.rollback();
+                }
+            }catch (SQLException ex){
+                System.out.println(ex.getMessage());
+                JOptionPane.showMessageDialog(null, "Nao foi possivel realizar o comando. Dando Rollback na transacao", 
+                    "Transacao invalida", 2);
+            }
+        } finally {
+            this.close(pstmt1);
+            this.close(pstmt2);
+            this.close(conn);
+            
+        }
+        
+    }
+    
+    
+    private App close(AutoCloseable closeable){ //metodo para fechar conexao com o bd
+        try {
+            if(closeable != null){
+                closeable.close();
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return this;
     }
     
 }

@@ -151,8 +151,7 @@ public class InsertAutor extends javax.swing.JFrame {
             
             try {
                 app.insertAutor(aut);
-                JOptionPane.showMessageDialog(null, "Insert Realizado", "Transacao feita", 1);
-            	clear();
+                clear();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Insert invalido", "Transacao invalida", 2);
             }

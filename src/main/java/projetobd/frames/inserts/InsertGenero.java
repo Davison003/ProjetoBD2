@@ -145,8 +145,7 @@ public class InsertGenero extends javax.swing.JFrame {
             
             try {
                 app.insertGen(gen);
-                JOptionPane.showMessageDialog(null, "Insert Realizado", "Transacao feita", 1);
-            	clear();
+                clear();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Insert invalido", "Transacao invalida", 2);
             }

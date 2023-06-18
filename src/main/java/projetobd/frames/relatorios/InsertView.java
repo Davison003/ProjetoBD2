@@ -215,13 +215,12 @@ public class InsertView extends javax.swing.JFrame {
             
             try {
                 app.insertRelatLivros(aut, liv, gen);
-                JOptionPane.showMessageDialog(null, "Insert Realizado", "Transacao feita", 1);
-            	clear();
+                clear();
                 RelatorioGeral.getRelatorioGeral().listarGeral();
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Insert invalido", "Transacao invalida", 2);
             }
-        }catch (NumberFormatException nfe) {
+        }catch (IllegalArgumentException nfe) {
     		JOptionPane.showMessageDialog(null, "Preencha todos os campos corretamente!", "Transacao invalida", 2);
     	}
     }//GEN-LAST:event_bt_confirmActionPerformed

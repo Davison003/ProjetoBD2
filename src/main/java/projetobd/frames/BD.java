@@ -1,5 +1,6 @@
 package projetobd.frames;
 
+import projetobd.frames.deletes.DeleteLivro;
 import projetobd.frames.inserts.InsertAutor;
 import projetobd.frames.inserts.InsertGenero;
 import projetobd.frames.relatorios.RelatorioAutores;
@@ -124,6 +125,7 @@ public class BD extends javax.swing.JFrame {
 
     private void delLivroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delLivroActionPerformed
         // TODO add your handling code here:
+        DeleteLivro.getDeleteLivro().setVisible(true);
     }//GEN-LAST:event_delLivroActionPerformed
 
     private void relAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_relAutorActionPerformed

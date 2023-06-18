@@ -5,6 +5,8 @@ import projetobd.frames.inserts.InsertAutor;
 import projetobd.frames.inserts.InsertGenero;
 import projetobd.frames.relatorios.RelatorioAutores;
 import projetobd.frames.relatorios.RelatorioGeral;
+import projetobd.frames.updates.UpdateAutor;
+import projetobd.frames.updates.UpdateGenero;
 
 
 public class BD extends javax.swing.JFrame {
@@ -39,6 +41,9 @@ public class BD extends javax.swing.JFrame {
         inserir = new javax.swing.JMenu();
         insertAutor = new javax.swing.JMenuItem();
         insertGen = new javax.swing.JMenuItem();
+        alterar = new javax.swing.JMenu();
+        altAutor = new javax.swing.JMenuItem();
+        altGen = new javax.swing.JMenuItem();
         delete = new javax.swing.JMenu();
         delLivro = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
@@ -69,6 +74,26 @@ public class BD extends javax.swing.JFrame {
 
         jMenuBar1.add(inserir);
 
+        alterar.setText("Alterar...");
+
+        altAutor.setText("Autor");
+        altAutor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                altAutorActionPerformed(evt);
+            }
+        });
+        alterar.add(altAutor);
+
+        altGen.setText("Gênero");
+        altGen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                altGenActionPerformed(evt);
+            }
+        });
+        alterar.add(altGen);
+
+        jMenuBar1.add(alterar);
+
         delete.setText("Remover");
 
         delLivro.setText("Livro");
@@ -81,7 +106,7 @@ public class BD extends javax.swing.JFrame {
 
         jMenuBar1.add(delete);
 
-        jMenu3.setText("Relatorios...");
+        jMenu3.setText("Relatorio...");
 
         relAutor.setText("Autores");
         relAutor.addActionListener(new java.awt.event.ActionListener() {
@@ -143,6 +168,16 @@ public class BD extends javax.swing.JFrame {
         InsertGenero.getInsertGenero().setVisible(true);
     }//GEN-LAST:event_insertGenActionPerformed
 
+    private void altAutorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altAutorActionPerformed
+        // TODO add your handling code here:
+        UpdateAutor.getUpdateAutor().setVisible(true);
+    }//GEN-LAST:event_altAutorActionPerformed
+
+    private void altGenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_altGenActionPerformed
+        // TODO add your handling code here:
+        UpdateGenero.getUpdateGenero().setVisible(true);
+    }//GEN-LAST:event_altGenActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -179,6 +214,9 @@ public class BD extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem altAutor;
+    private javax.swing.JMenuItem altGen;
+    private javax.swing.JMenu alterar;
     private javax.swing.JMenuItem delLivro;
     private javax.swing.JMenu delete;
     private javax.swing.JMenu inserir;

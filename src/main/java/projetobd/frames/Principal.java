@@ -20,6 +20,7 @@ public class Principal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        titulo = new javax.swing.JLabel();
         mnBar = new javax.swing.JMenuBar();
         signin = new javax.swing.JMenu();
         login = new javax.swing.JMenuItem();
@@ -27,6 +28,9 @@ public class Principal extends javax.swing.JFrame {
         close = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        titulo.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        titulo.setText("Bando de Livros");
 
         signin.setText("Sign in");
 
@@ -58,11 +62,17 @@ public class Principal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 275, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(69, 69, 69)
+                .addComponent(titulo)
+                .addContainerGap(76, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 113, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(titulo)
+                .addContainerGap(53, Short.MAX_VALUE))
         );
 
         pack();
@@ -126,5 +136,6 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JMenuItem login;
     private javax.swing.JMenuBar mnBar;
     private javax.swing.JMenu signin;
+    private javax.swing.JLabel titulo;
     // End of variables declaration//GEN-END:variables
 }

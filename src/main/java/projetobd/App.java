@@ -306,8 +306,55 @@ public class App {
         
     }
     
+    public void AltGen(Genero gen) throws SQLException { 
+        String SQL = "UPDATE Genero SET nome=?, descricao=? WHERE id=?";
+        
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        
+        try {
+            conn = connect();
+            conn.setAutoCommit(false);
+            
+            pstmt = conn.prepareStatement(SQL);
+            
+            pstmt.setString(1, gen.getNome());
+            pstmt.setString(2, gen.getDescricao());
+            pstmt.setInt(3, gen.getId());
+            
+            int affectedRows = pstmt.executeUpdate();
+            
+            if (affectedRows > 0) {
+                JOptionPane.showMessageDialog(null, "Update Realizado", "Transacao feita", 1);
+            }else {
+                conn.rollback();
+            }
+            
+            conn.commit();
+            
+        }catch (SQLException e) {
+            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, "Nao foi possivel realizar o comando. Dando Rollback na transacao", 
+                    "Transacao invalida", 2);
+            
+            try {
+                if(conn != null){
+                    conn.rollback();
+                }
+            }catch (SQLException ex){
+                System.out.println(ex.getMessage());
+                JOptionPane.showMessageDialog(null, "Nao foi possivel realizar o comando. Dando Rollback na transacao", 
+                    "Transacao invalida", 2);
+            }
+        } finally {
+            this.close(pstmt);
+            this.close(conn);
+        
+        }
+    }
     
-    public void AltAutor(Autor aut) {
+    
+    public void AltAutor(Autor aut) throws SQLException {
         String SQL = "UPDATE Autor SET nome=?, bio=? WHERE id=?";
         
         Connection conn = null;

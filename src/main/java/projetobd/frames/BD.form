@@ -32,6 +32,29 @@
             </MenuItem>
           </SubComponents>
         </Menu>
+        <Menu class="javax.swing.JMenu" name="alterar">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Alterar..."/>
+          </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="altAutor">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Autor"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="altAutorActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="altGen">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="G&#xea;nero"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="altGenActionPerformed"/>
+              </Events>
+            </MenuItem>
+          </SubComponents>
+        </Menu>
         <Menu class="javax.swing.JMenu" name="delete">
           <Properties>
             <Property name="text" type="java.lang.String" value="Remover"/>
@@ -49,7 +72,7 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu3">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Relatorios..."/>
+            <Property name="text" type="java.lang.String" value="Relatorio..."/>
           </Properties>
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="relAutor">

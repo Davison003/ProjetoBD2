@@ -72,11 +72,14 @@ public class App {
         String SQL = "INSERT INTO relatoriolivros(id_autor, id_livro, id_genero, autor, livro, genero, ano, isbn, descricao)"
                 + " VALUES (?,?,?,?,?,?,?,?,?)";
         
-        Connection conn = connect();
-        conn.setAutoCommit(false);
-        PreparedStatement pstmt = conn.prepareStatement(SQL);
+        Connection conn = null;
+        PreparedStatement pstmt = null;
         
         try {
+            
+            conn = connect();
+            conn.setAutoCommit(false);
+            pstmt = conn.prepareStatement(SQL);
             
             pstmt.setInt(1, aut.getId());
             pstmt.setInt(2, liv.getId());
@@ -122,10 +125,13 @@ public class App {
     public void insertAutor(Autor aut) throws SQLException {
         String SQL = "INSERT INTO Autor(id, nome, bio)"
                         + "VALUES(?,?,?)";
-        Connection conn = connect();
-        conn.setAutoCommit(false);
-        PreparedStatement pstmt = conn.prepareStatement(SQL);
+        
+        Connection conn = null;
+        PreparedStatement pstmt = null;
         try {
+            conn = connect();
+            conn.setAutoCommit(false);
+            pstmt = conn.prepareStatement(SQL);
             
             pstmt.setInt(1, aut.getId());
             pstmt.setString(2, aut.getNome());
@@ -165,10 +171,12 @@ public class App {
         String SQL = "INSERT INTO Genero(id, nome, descricao)"
                 + "VALUES(?,?,?)";
         
-        Connection conn = connect();
-        conn.setAutoCommit(false);
-        PreparedStatement pstmt = conn.prepareStatement(SQL);
+        Connection conn = null;
+        PreparedStatement pstmt = null;
         try {
+            conn = connect();
+            conn.setAutoCommit(false);
+            pstmt = conn.prepareStatement(SQL);
             
             pstmt.setInt(1, gen.getId());
             pstmt.setString(2, gen.getNome());
@@ -296,6 +304,54 @@ public class App {
             
         }
         
+    }
+    
+    
+    public void AltAutor(Autor aut) {
+        String SQL = "UPDATE Autor SET nome=?, bio=? WHERE id=?";
+        
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        
+        try {
+            conn = connect();
+            conn.setAutoCommit(false);
+            
+            pstmt = conn.prepareStatement(SQL);
+            
+            pstmt.setString(1, aut.getNome());
+            pstmt.setString(2, aut.getBio());
+            pstmt.setInt(3, aut.getId());
+            
+            int affectedRows = pstmt.executeUpdate();
+            
+            if (affectedRows > 0) {
+                JOptionPane.showMessageDialog(null, "Update Realizado", "Transacao feita", 1);
+            }else {
+                conn.rollback();
+            }
+            
+            conn.commit();
+            
+        }catch (SQLException e) {
+            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, "Nao foi possivel realizar o comando. Dando Rollback na transacao", 
+                    "Transacao invalida", 2);
+            
+            try {
+                if(conn != null){
+                    conn.rollback();
+                }
+            }catch (SQLException ex){
+                System.out.println(ex.getMessage());
+                JOptionPane.showMessageDialog(null, "Nao foi possivel realizar o comando. Dando Rollback na transacao", 
+                    "Transacao invalida", 2);
+            }
+        } finally {
+            this.close(pstmt);
+            this.close(conn);
+        
+        }
     }
     
     

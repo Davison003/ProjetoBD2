@@ -272,7 +272,7 @@ public class App {
                 pstmt2.setInt(1, cod);
                 int affectedRows1 = pstmt2.executeUpdate();
                 
-                System.out.println("certinho");
+                //System.out.println("certinho");
                 JOptionPane.showMessageDialog(null, "Delete Realizado", "Transacao feita", 1);
             }else {
             	conn.rollback();

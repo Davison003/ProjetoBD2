@@ -80,17 +80,11 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="cx_user">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="postgres"/>
-      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cx_userActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JPasswordField" name="cx_password">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="utfpr"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="bt_close">
       <Properties>

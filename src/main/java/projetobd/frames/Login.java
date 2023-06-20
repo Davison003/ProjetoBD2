@@ -50,14 +50,11 @@ public class Login extends javax.swing.JFrame {
 
         password.setText("Senha: ");
 
-        cx_user.setText("postgres");
         cx_user.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cx_userActionPerformed(evt);
             }
         });
-
-        cx_password.setText("utfpr");
 
         bt_close.setText("Close");
         bt_close.addActionListener(new java.awt.event.ActionListener() {

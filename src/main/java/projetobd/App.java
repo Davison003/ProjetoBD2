@@ -12,7 +12,7 @@ import javax.swing.table.DefaultTableModel;
 public class App {
 
     
-    private final String url = "jdbc:postgresql://localhost:5432/Books";
+    private final String url = "jdbc:postgresql://localhost/Books";
     private String user;
     private char[] password;
 
